@@ -20,4 +20,6 @@ Other important TSV files such as INFO.txt and ASSAY_PARAM.tsv are highly user/e
 ### Script
 The Script folder consists of two files:
 #### 1. main_PYnotebook.ipynb (Jupyter notebook with Python kernel)
+The notebook contains two options: one to use SDF as an input and one to use a csv as input to generate both COMPOUND_RECORD.tsv and COMPOUND_CTAB.sdf. This notebook calls for function ```python/generate_compound_files```. 
 #### 2. main_Rscript.R (R script)
+This R script calls three functions, ```write_activity_tsv.R```, ```write_assay_tsv.R```, ```write_reference_tsv.R```.
