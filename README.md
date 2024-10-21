@@ -5,7 +5,7 @@ This README markdown refers to the pipeline for converting supplementary tables 
 ## Inputs
 1. compounds.csv
 2. assay_input.csv
-3. activity_inputs.csv
+3. activity_inputs.csv <br>
 These are the compulsory input CSV files.
 
 ## Outputs
@@ -24,9 +24,10 @@ The Script folder consists of two files:
 The notebook contains two options: one to use SDF as an input and one to use a csv as input to generate both COMPOUND_RECORD.tsv and COMPOUND_CTAB.sdf. This notebook calls for function ```python/generate_compound_files```. 
 #### 2. main_Rscript.R (R script)
 This R script calls three functions, ```write_activity_tsv.R```, ```write_assay_tsv.R```, ```write_reference_tsv.R```. <br>
+However, the script also contains the ##commented out script to convert Excel supplementary sheets from our use-case dataset to convert these Excel sheets to standardised CSV format specific gut bacteria-mediated biotransformation. 
 Based on the output files, the whole script is divided into 4 sections:
 #### REFERENCE.tsv ####
-```write_reference_tsv``` takes various inputs to generate a reference TSV file according to ChEMBL rules. Here is example code:
+```write_reference_tsv``` takes various inputs to generate a reference TSV file according to ChEMBL rules. 
 
 ```r
 RIDX <- c("HumanMicrobiome_DrugMetabolism")
@@ -37,6 +38,28 @@ AUTHORS	<- c("Michael Zimmermann, Maria Zimmermann-Kogadeeva, Rebekka Wegmann & 
 ABSTRACT <- c("Individuals vary widely in their responses to medicinal drugs, which can be dangerous and expensive owing to treatment delays and adverse effects.")
 output_dir <- "/ChEMBL_Submission_Pipeline/outputs
 ref_tbl <- write_reference_tsv(output_dir, RIDX, DOI, TITLE, AUTHORS, ABSTRACT, REF_TYPE)
+```
+#### ASSAY.tsv ####
+```write_assay_tsv``` takes a supplementary CSV file as input to generate ASSAY.tsv.
 
-ref_tbl
+```r
+input_csv <- "/ChEMBL_Submission_Pipeline/inputs/assay_input.csv"
+source <- "Zimmermann"
+
+assay_tbl <- write_assay_tsv(output_dir, input_csv, ridx, category = c("bacteria", "enzyme", "community"), source)
+```
+
+
+
+#### ACTIVITY.tsv ####
+```write_activity_tsv``` takes a supplementary CSV file as input to generate ACTIVITY.tsv.
+
+```r
+input_csv <- "ChEMBL_Submission_Pipeline/inputs/activity_input.csv"
+compound_tsv <- "/ChEMBL_Submission_Pipeline/outputs/COMPOUND_RECORD.tsv" 
+assay_tsv <- "/ChEMBL_Submission_Pipeline/outputs/ASSAY.tsv"
+
+
+activity_tbl <- write_activity_tsv(output_dir, input_csv, compound_tsv, assay_tsv,
+                   ridx, type = "Biotransformation")
 ```
