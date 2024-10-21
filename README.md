@@ -26,4 +26,17 @@ The notebook contains two options: one to use SDF as an input and one to use a c
 This R script calls three functions, ```write_activity_tsv.R```, ```write_assay_tsv.R```, ```write_reference_tsv.R```. <br>
 Based on the output files, the whole script is divided into 4 sections:
 #### REFERENCE.tsv ####
+```write_reference_tsv``` takes various inputs to generate a reference TSV file according to ChEMBL rules. Here is example code:
 
+```r
+RIDX <- c("HumanMicrobiome_DrugMetabolism")
+DOI <- c("10.1038/s41586-019-1291-3")
+REF_TYPE <- c("Publication")
+TITLE <- c("Mapping human microbiome drug metabolism by gut bacteria and their genes") #mandatory
+AUTHORS	<- c("Michael Zimmermann, Maria Zimmermann-Kogadeeva, Rebekka Wegmann & Andrew L. Goodman") #mandatory
+ABSTRACT <- c("Individuals vary widely in their responses to medicinal drugs, which can be dangerous and expensive owing to treatment delays and adverse effects.")
+output_dir <- "/ChEMBL_Submission_Pipeline/outputs
+ref_tbl <- write_reference_tsv(output_dir, RIDX, DOI, TITLE, AUTHORS, ABSTRACT, REF_TYPE)
+
+ref_tbl
+```
