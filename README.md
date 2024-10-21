@@ -19,4 +19,5 @@ Other important TSV files such as INFO.txt and ASSAY_PARAM.tsv are highly user/e
 
 ### Script
 The Script folder consists of two files:
-1. 
+#### 1. main_PYnotebook.ipynb (Jupyter notebook with Python kernel)
+#### 2. main_Rscript.R (R script)
