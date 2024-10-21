@@ -1,3 +1,4 @@
+[![License](https://img.shields.io/badge/License-MIT%202.0-blue.svg)](https://opensource.org/licenses/MIt)
 # ChEMBL Submission Pipeline
 This README markdown refers to the pipeline for converting supplementary tables in CSV format to ChEMBL-Submission-Ready TSV tables, specifically for Biotransformation Data. The pipeline requires both R and Python installations, although majority of it is written in R, the chemical compounds data handling is executed using RDKit in Python.
 
