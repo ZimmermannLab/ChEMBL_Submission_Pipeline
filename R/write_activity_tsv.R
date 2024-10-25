@@ -24,7 +24,7 @@ write_activity_tsv <- function(output_dir, input_csv, compound_tsv, assay_tsv,
 
   #<- input_activity$now[is.na(input_activity$Sample)]
   # Pre-allocate with NA
-  input_activity$matched_AIDX <- NA
+  #input_activity$matched_AIDX <- NA
 
   # Correctly splitting and extracting the first two parts of the Sample column
   input_activity$first_split <- sapply(input_activity$Sample, function(x) {
@@ -58,7 +58,7 @@ write_activity_tsv <- function(output_dir, input_csv, compound_tsv, assay_tsv,
 
   ACTIVITY$AIDX <- input_activity$matched_AIDX
 
-  write.csv(ACTIVITY, paste(output_dir, "/ASSAY.tsv", sep =""))
+  write.csv(ACTIVITY, file.path(output_dir, "ASSAY.tsv"))
   return(ACTIVITY)
 
 }

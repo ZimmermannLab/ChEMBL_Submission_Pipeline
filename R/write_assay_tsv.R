@@ -22,16 +22,16 @@ write_assay_tsv <- function(output_dir, input_csv, ridx, category = c("bacteria"
   # second category specific - enzyme
   if ("enzyme" %in% category){
 
-    rows_indices <- as.numeric(rownames(input_assay[!is.na(input_assay$target_name), ]))
+    rows_indices <- which(!is.na(input_assay$target_name))
     ASSAY[rows_indices,"TARGET_TYPE"] <- "SINGLE_PROTEIN"
     ASSAY[rows_indices, "TARGET_ORGANISM"] <- input_assay[rows_indices, "Species"]
     ASSAY[rows_indices, "TARGET_TAX_ID"] <- input_assay[rows_indices, "organismTAXID"]
-    unlist(ASSAY[rows_indices, "TARGET_ORGANISM"])
-    ASSAY[rows_indices, "AIDX"] <- paste(rep("Zimmermann", length(rows_indices)), unlist(ASSAY[rows_indices, "ASSAY_STRAIN"]), unlist(ASSAY[rows_indices, "ASSAY_ORGANISM"]), rep("biotransformation",  length(rows_indices)), unlist(ASSAY[rows_indices, "TARGET_ACCESSION"]), sep = "_")
+    #unlist(ASSAY[rows_indices, "TARGET_ORGANISM"])
+    ASSAY[rows_indices, "AIDX"] <- paste("Zimmermann", ASSAY[rows_indices, "ASSAY_STRAIN"], ASSAY[rows_indices, "ASSAY_ORGANISM"], "biotransformation", ASSAY[rows_indices, "TARGET_ACCESSION"], sep = "_")
   }
   # third category specific - community
   if ("community" %in% category){
-    rows_indices_comm <- as.numeric(rownames(input_assay[!is.na(input_assay$Specimen), ]))
+    rows_indices_comm <- which(!is.na(input_assay$Specimen))
     ASSAY[rows_indices_comm, "AIDX"] <- paste(rep("Zimmermann_Community", length(rows_indices_comm)),
                                               unlist(input_assay[rows_indices_comm, "Specimen"]),
                                               rep("biotransformation",  length(rows_indices_comm)),
@@ -41,7 +41,7 @@ write_assay_tsv <- function(output_dir, input_csv, ridx, category = c("bacteria"
   # first category - single strain
   if ("bacteria" %in% category){
 
-    rows_indices_bac <- as.numeric(rownames(ASSAY[is.na(ASSAY$AIDX), ]))
+    rows_indices_bac <- which(is.na(ASSAY$AIDX))
     ASSAY[rows_indices_bac, "AIDX"] <- paste(rep("Zimmermann", length(rows_indices_bac)),
                                              unlist(ASSAY[rows_indices_bac, "ASSAY_STRAIN"]),
                                              unlist(ASSAY[rows_indices_bac, "ASSAY_ORGANISM"]),
@@ -51,7 +51,8 @@ write_assay_tsv <- function(output_dir, input_csv, ridx, category = c("bacteria"
   ASSAY <- ASSAY %>%
     mutate(across(everything(), ~ replace(.x, is.na(.x), "")))
 
-  write.csv(ASSAY, paste(output_dir, "/ASSAY.tsv", sep =""))
+  write.csv(ASSAY, file.path(output_dir, "ASSAY.tsv"))
+
   return(ASSAY)
 }
 
