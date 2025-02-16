@@ -39,6 +39,19 @@ ABSTRACT <- c("Individuals vary widely in their responses to medicinal drugs, wh
 output_dir <- "/ChEMBL_Submission_Pipeline/outputs
 ref_tbl <- write_reference_tsv(output_dir, RIDX, DOI, TITLE, AUTHORS, ABSTRACT, REF_TYPE)
 ```
+
+#### COMPOUND_RECORD.tsv and COMPOUND_CTAB.sdf ####
+```generate_compound_files``` creates both TSV and SDF files and is based on RDKit. 
+
+```python
+output_dir = "/ChEMBL_Submission_Pipeline/ChEMBL_Submission_Pipeline/outputs"
+input_file = "/ChEMBL_Submission_Pipeline/ChEMBL_Submission_Pipeline/inputs/compounds.csv"
+RIDX = "HumanMicrobiome_DrugMetabolism"
+prefix = "HMDM"
+
+generate_compound_files(output_dir, input_file, RIDX, prefix)
+```
+
 #### ASSAY.tsv ####
 ```write_assay_tsv``` takes a supplementary CSV file as input to generate ASSAY.tsv.
 
@@ -48,7 +61,6 @@ source <- "Zimmermann"
 
 assay_tbl <- write_assay_tsv(output_dir, input_csv, ridx, category = c("bacteria", "enzyme", "community"), source)
 ```
-
 
 
 #### ACTIVITY.tsv ####
